@@ -1,43 +1,42 @@
-# Kaggle: Google - The Gemma 3n Impact Challenge
+# Assignment Submission – Hacktoberfest Challenge Contribution
 
-## Student Details For DevOps CA-1 Submission:
-- Kevin Tandon - 22070122098
-- Malvika Bhadoriya - 22070122106
-- Manan Bhimjiyani - 220701220107
-- Manas Jain - 22070122109
+## Project Overview
 
-![Gemma 3n Logo](https://img.shields.io/badge/Powered%20by-Gemma%203n-blue?style=for-the-badge)
-![Python](https://img.shields.io/badge/Python-3.8+-green?style=for-the-badge)
-![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)
+This submission is part of a Hacktoberfest challenge.
+We have contributed to the challenge’s application by **integrating a Click Counter feature**.
 
-## What This Project Demonstrates
-This application showcases the key advantages of **Gemma 3n** for real-world applications the following are the screenshots of the compeition submission and application working:
+* The contribution can be found inside this repository folder.
+* A **Pull Request (PR)** has also been raised to the **original repository owner** for merging our contribution.
 
-![Submission Screenshot](ss3.png)
-![Interface Screenshot](ss1.png)
-![Demo Generation](ss2.png)
+### Important Note
 
-## Project Repository Link:
-[text](https://github.com/Malvericus/gemma-chatbot)
+* In our **previous submission**, we mistakenly submitted the **forked repository**. This caused the forked repo to appear as the dominant repository.
+* This is a **resubmission**, completed by **cloning instead of forking**, to ensure proper structure and attribution.
 
-This application showcases the key advantages of **Gemma 3n** for real-world applications:
+---
 
-- **Privacy-First AI**: All text generation happens locally on your device
-- **Offline Capability**: No internet connection required after initial setup
-- **Creative Applications**: Versatile text generation for stories, poems, and more
-- **On-Device Performance**: Efficient inference on consumer hardware
-- **Accessible AI**: Democratizing access to powerful language models
+## Contribution Details
 
-## ✨ Features
+**Feature Added:**
 
-- **Simple Web Interface**: Clean, user-friendly Gradio-based UI
-- **Multiple Writing Prompts**: Pre-built suggestions for quick starts
-- **Adjustable Output Length**: Control response length (50-300 tokens)
-- **Generation History**: Track and review your creative outputs
-- **GPU Acceleration**: Automatic GPU utilization when available
-- **Fallback Support**: Graceful degradation if Gemma 3n unavailable
+* A **Click Counter** functionality integrated into the application.
 
+---
 
+## Contributors
 
+* **Harsimran Kaur** – 22070122077
+* **Heet Dudhwala** – 22070122078
+* **Omkar Derekar** – 22070122047
 
+---
+
+## Submission Instructions
+
+This repository contains:
+
+* The cloned base repository of the Hacktoberfest challenge.
+* Our added feature implementation (Click Counter).
+
+Pull Request has been sent for review and merge into the main project.
 
