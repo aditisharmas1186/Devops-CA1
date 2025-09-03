@@ -4,6 +4,26 @@ GitShare is a full-stack web application designed for seamless sharing and manag
 
 ---
 
+## 👨‍💻 Authors
+
+- **Abhishek Rajput - 22070122007**
+- **Arnav Jain - 22070122030**
+- **Harsh Agrawal - 22070122073**
+- **Himani Arora - 22070122079**
+
+
+## Problem URL: 
+```
+https://github.com/orgs/community/discussions/44506
+```
+```
+https://github.com/orgs/community/discussions/23128
+```
+## Solution URL:
+```
+gitshare.onrender.com/
+```
+
 ## 📚 Table of Contents
 
 * [Prerequisites](#prerequisites)
@@ -16,7 +36,6 @@ GitShare is a full-stack web application designed for seamless sharing and manag
 * [Images](#images)
 * [Usage](#usage)
 * [License](#license)
-* [Author](#author)
 
 ---
 
@@ -261,9 +280,6 @@ This project is licensed under the **MIT License** – see the [LICENSE](./LICEN
 
 ---
 
-## 👨‍💻 Author
-
-**Abhishek Rajput**
 
 
 
