@@ -1,0 +1,12 @@
+- name: Deploy Virtual Zoo to Kubernetes
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: Apply Kubernetes Deployment and Service
+      kubernetes.core.k8s:
+        state: present
+        src: "{{ item }}"
+        namespace: default
+      loop:
+        - "k8s/deployment.yaml"
+        - "k8s/service.yaml"
