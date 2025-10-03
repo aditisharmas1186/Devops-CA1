@@ -1,2 +1,0 @@
-add the following to this folder
-│   └── final_model.pkl

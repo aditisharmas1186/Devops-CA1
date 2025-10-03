@@ -1,3 +1,0 @@
-User-agent: *
-Allow: /
-Sitemap: https://chinmay29hub-haiku-readme.vercel.app/sitemap.xml
