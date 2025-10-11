@@ -1,0 +1,42 @@
+# Node.js dependencies
+node_modules/
+
+# Build output
+*.log
+*.out
+*.o
+*.obj
+*.exe
+*.dll
+*.class
+
+# Environment and secrets
+.env
+Secret.txt
+*.csv
+*.pem
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE/editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Docker
+*.pid
+
+# Terraform
+*.tfstate
+*.tfstate.backup
+.terraform/
+.terraform.lock.hcl
+
+# Misc
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+Project_WriteUp.docx
