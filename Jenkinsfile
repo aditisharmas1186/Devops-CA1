@@ -2,63 +2,52 @@ pipeline {
     agent any
 
     environment {
-        BACKEND_IMAGE = "supplychain-backend:latest"
-        FRONTEND_IMAGE = "supplychain-frontend:latest"
+        BACKEND_PORT = "4000"
+        FRONTEND_PORT = "3001"  // avoid 3000 conflicts
     }
 
     stages {
-        stage('Checkout') {
+
+        stage('Build Backend Docker') {
             steps {
-                echo "🔄 Cloning repository..."
-                checkout scm
+                echo "Building backend Docker image..."
+                bat 'docker build -t supplychain-backend ./backend'
             }
         }
 
-        stage('Build Docker Images') {
+        stage('Build Frontend Docker') {
             steps {
-                script {
-                    echo "🐳 Building backend image..."
-                    sh 'docker build -t ${BACKEND_IMAGE} ./backend'
-
-                    echo "🐳 Building frontend image..."
-                    sh 'docker build -t ${FRONTEND_IMAGE} ./frontend'
-                }
+                echo "Building frontend Docker image..."
+                bat 'docker build -t supplychain-frontend ./frontend'
             }
         }
 
-        stage('Run Containers with docker-compose') {
+        stage('Start Docker Compose') {
             steps {
-                script {
-                    echo "🚀 Starting containers using docker-compose..."
-                    // use freshly built local images
-                    sh 'docker-compose up -d --build'
-                }
+                echo "Starting Docker containers..."
+                bat 'docker-compose up -d'
             }
         }
 
-        stage('Verify Running Containers') {
+        stage('Run Ansible (Dummy)') {
             steps {
-                script {
-                    echo "🔍 Checking container status..."
-                    sh 'docker ps'
-                }
+                echo "Running Ansible playbook..."
+                // Run Dockerized Ansible container
+                bat 'docker run --rm -v %CD%\\ansible:/ansible my-ansible'
             }
         }
 
-        stage('Cleanup Unused Resources') {
+        stage('Clean Up') {
             steps {
-                echo "🧹 Cleaning up unused Docker data..."
-                sh 'docker system prune -f'
+                echo "Stopping Docker Compose..."
+                bat 'docker-compose down'
             }
         }
     }
 
     post {
-        success {
-            echo "✅ Containers built and running successfully!"
-        }
-        failure {
-            echo "❌ Pipeline failed."
+        always {
+            echo "Pipeline finished."
         }
     }
 }
