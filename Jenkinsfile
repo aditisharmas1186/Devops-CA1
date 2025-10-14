@@ -32,7 +32,6 @@ pipeline {
         stage('Run Ansible (Dummy)') {
             steps {
                 echo "Running Ansible playbook..."
-                // Run Dockerized Ansible container
                 bat 'docker run --rm -v %CD%\\ansible:/ansible my-ansible'
             }
         }
