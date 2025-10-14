@@ -31,6 +31,28 @@ services:
       - supplychain-net
     restart: unless-stopped
 
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus:/etc/prometheus
+    networks:
+      - supplychain-net
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3002:3000"   # 3002 on host to avoid conflict with frontend
+    networks:
+      - supplychain-net
+    depends_on:
+      - prometheus
+
+
 networks:
   supplychain-net:
     driver: bridge
+

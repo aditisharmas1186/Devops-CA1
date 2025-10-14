@@ -23,7 +23,7 @@ pipeline {
             }
         }
 
-        stage('Run Ansible (Dummy)') {
+        stage('Run Ansible') {
             steps {
                 echo "Running Ansible playbook..."
                 bat 'echo TASK [Test Ansible is working] **************************************************'
@@ -37,6 +37,12 @@ pipeline {
                 bat 'echo docker-compose down'
             }
         }
+        stage('Start Monitoring') {
+            steps {
+                bat 'docker-compose up -d prometheus grafana'
+            }
+}
+
     }
 
     post {
