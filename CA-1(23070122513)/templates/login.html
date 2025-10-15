@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background: linear-gradient(135deg, #121212, #1e1e1e);
+      font-family: "Segoe UI", Roboto, sans-serif;
+      color: #fff;
+    }
+    .login-container {
+      background: #181818;
+      padding: 2em;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.4);
+      width: 300px;
+      text-align: center;
+    }
+    h1 {
+      margin-bottom: 1.5em;
+      font-weight: 500;
+      color: #00ffcc;
+    }
+    label {
+      display: block;
+      margin-bottom: 0.5em;
+      text-align: left;
+      font-size: 0.9em;
+      color: #ccc;
+    }
+    input {
+      width: 100%;
+      padding: 0.6em;
+      border: 1px solid #333;
+      border-radius: 6px;
+      background: #101010;
+      color: #fff;
+      font-size: 1em;
+      margin-bottom: 1.2em;
+      box-sizing: border-box;
+    }
+    input:focus {
+      outline: none;
+      border-color: #00ffcc;
+      box-shadow: 0 0 5px #00ffcc;
+    }
+    button {
+      width: 100%;
+      padding: 0.7em;
+      border: none;
+      border-radius: 6px;
+      background: #00ffcc;
+      color: #121212;
+      font-weight: 600;
+      font-size: 1em;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+    button:hover {
+      background: #00e6b8;
+    }
+    .footer {
+      margin-top: 1em;
+      font-size: 0.8em;
+      color: #aaa;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h1>Login</h1>
+    <form action="" method="post">
+      <label for="user">Username</label>
+      <input type="text" id="user" name="user" required placeholder="Enter your name" />
+      <button type="submit">Enter Chat</button>
+    </form>
+    <div class="footer">
+      Welcome to Flask Chat 🚀
+    </div>
+  </div>
+</body>
+</html>

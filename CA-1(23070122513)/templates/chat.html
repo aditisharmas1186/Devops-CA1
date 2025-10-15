@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Flask Chat</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <style>
+    body {
+      max-width: 600px;
+      margin: 2em auto;
+      padding: 1em;
+      background: #121212;
+      color: #eaeaea;
+      font: 16px/1.5 "Segoe UI", Roboto, sans-serif;
+    }
+    h1 {
+      text-align: center;
+      font-weight: 500;
+      margin-bottom: 1em;
+      color: #00ffcc;
+    }
+    #chat-box {
+      background: #1e1e1e;
+      border: 1px solid #333;
+      border-radius: 8px;
+      padding: 1em;
+      height: 400px;
+      overflow-y: auto;
+      margin-bottom: 1em;
+      font-family: monospace;
+      white-space: pre-wrap;
+    }
+    .msg {
+      margin: 0.4em 0;
+      padding: 0.5em 0.7em;
+      border-radius: 6px;
+    }
+    .msg.you {
+      background: #0f5132;
+      color: #d1fae5;
+      align-self: flex-end;
+      text-align: right;
+    }
+    .msg.other {
+      background: #222;
+      color: #f0f0f0;
+      text-align: left;
+    }
+    #input-area {
+      display: flex;
+      gap: 0.5em;
+    }
+    #in {
+      flex: 1;
+      padding: 0.6em;
+      border-radius: 6px;
+      border: 1px solid #444;
+      background: #181818;
+      color: #fff;
+      font-size: 1em;
+    }
+    button {
+      padding: 0.6em 1em;
+      border: none;
+      border-radius: 6px;
+      background: #00ffcc;
+      color: #121212;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #00e6b8;
+    }
+  </style>
+</head>
+<body>
+  <h1>Hi, {{ user }} 👋</h1>
+  <div id="chat-box"></div>
+  <div id="input-area">
+    <input id="in" type="text" placeholder="Type a message and press Enter..." autocomplete="off" />
+    <button id="send">Send</button>
+  </div>
+
+  <script>
+    function addMessage(text, type="other") {
+      const chat = document.getElementById('chat-box');
+      const msg = document.createElement('div');
+      msg.className = "msg " + type;
+      msg.textContent = text;
+      chat.prepend(msg); // newest on top
+    }
+
+    function sse() {
+      const source = new EventSource('/stream');
+      source.onmessage = function(e) {
+        console.log("Incoming:", e.data);
+        addMessage(e.data, "other");
+      };
+    }
+
+    function sendMessage() {
+      const input = $('#in');
+      const val = input.val().trim();
+      if (val) {
+        $.post('/post', { message: val });
+        addMessage(val, "you");
+        input.val('');
+      }
+    }
+
+    $('#in').keyup(function(e){
+      if (e.keyCode === 13) sendMessage();
+    });
+    $('#send').click(sendMessage);
+
+    sse();
+  </script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+version: "3.8"
+
+services:
+  app1:
+    container_name: flask-chat-1
+    build:
+      context: .
+    volumes:
+      - .:/app
+    ports:
+      - "5000:5000"
+    depends_on:
+      - redis
+
+  app2:
+    container_name: flask-chat-2
+    build:
+      context: .
+    volumes:
+      - .:/app
+    ports:
+      - "5001:5000"   # maps container’s port 5000 → host port 5001
+    depends_on:
+      - redis
+
+  redis:
+    container_name: redis
+    image: redis:4.0.1-alpine
+    ports:
+      - "6379:6379"
