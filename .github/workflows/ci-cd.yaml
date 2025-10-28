@@ -1,0 +1,41 @@
+name: CI-CD
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+env:
+  OWNER: atharvapachunde        # your GitHub username (lowercase)
+  REPO: ca2-213-230-501-503     # your repo name (lowercase)
+  IMAGE_NAME: talentlink
+
+jobs:
+  build-and-push:
+    name: Build & Push Docker Image
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        working-directory: Team-Talentlink-Devops/talentlink-main
+        run: |
+          echo "Building from: $(pwd)"
+          docker build -t ghcr.io/${{ env.OWNER }}/${{ env.REPO }}/${{ env.IMAGE_NAME }}:latest .
+
+      - name: Log in to GHCR
+        run: echo "${{ secrets.CR_PAT }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Push Docker image
+        run: docker push ghcr.io/${{ env.OWNER }}/${{ env.REPO }}/${{ env.IMAGE_NAME }}:latest
+
+      - name: Upload pipeline diagram (artifact)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pipeline-diagram
+          path: Team-Talentlink-Devops/talentlink-main/diagrams/pipeline.mmd

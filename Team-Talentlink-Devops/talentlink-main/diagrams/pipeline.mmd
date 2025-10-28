@@ -1,0 +1,7 @@
+flowchart LR
+A[Dev push / PR] --> B[GitHub Actions: Build Docker]
+B --> C[Push image to GHCR]
+C --> D{Deploy?}
+D -->|Yes| E[kubectl apply k8s YAMLs]
+E --> F[Rollout status OK]
+D -->|No| G[Stop after image push]

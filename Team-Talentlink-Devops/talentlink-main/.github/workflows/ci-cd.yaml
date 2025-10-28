@@ -1,0 +1,69 @@
+name: CI-CD
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+env:
+  IMAGE: ghcr.io/${{ github.repository }}/talentlink:latest
+
+jobs:
+  build-and-push:
+    name: Build & Push Docker Image
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Log in to GHCR
+        run: echo "${{ secrets.CR_PAT }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Build image
+        run: docker build -t $IMAGE ./Team-TalentLink-DevOps/talentlink-main
+
+      - name: Push image
+        run: docker push $IMAGE
+
+      - name: Upload pipeline diagram
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pipeline-diagram
+          path: ./Team-TalentLink-DevOps/talentlink-main/diagrams/pipeline.mmd
+
+  deploy:
+    name: Deploy to Kubernetes
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    env:
+      KUBE_CONFIG_B64: ${{ secrets.KUBE_CONFIG }}   # <- we can read secrets at STEP level via env
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Skip deploy if KUBE_CONFIG not set
+        if: ${{ env.KUBE_CONFIG_B64 == '' }}
+        run: echo "KUBE_CONFIG secret not set; skipping deploy."
+
+      - name: Setup kubectl
+        if: ${{ env.KUBE_CONFIG_B64 != '' }}
+        uses: azure/setup-kubectl@v4
+
+      - name: Load kubeconfig
+        if: ${{ env.KUBE_CONFIG_B64 != '' }}
+        run: |
+          echo "$KUBE_CONFIG_B64" | base64 -d > $HOME/.kube/config
+
+      - name: Apply manifests
+        if: ${{ env.KUBE_CONFIG_B64 != '' }}
+        run: |
+          kubectl apply -f ./Team-TalentLink-DevOps/talentlink-main/k8s/namespace.yaml
+          kubectl apply -f ./Team-TalentLink-DevOps/talentlink-main/k8s/deployment.yaml
+          kubectl apply -f ./Team-TalentLink-DevOps/talentlink-main/k8s/service.yaml
+
+      - name: Wait for rollout
+        if: ${{ env.KUBE_CONFIG_B64 != '' }}
+        run: kubectl -n pbl-devops rollout status deploy/talentlink

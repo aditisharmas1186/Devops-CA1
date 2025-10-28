@@ -1,0 +1,42 @@
+'YML'
+---
+- name: Prepare TalentLink runtime on localhost
+  hosts: local
+  become: yes
+
+  vars:
+    app_user: talentlink
+    app_dir: /opt/talentlink
+
+  tasks:
+    - name: Ensure base packages are present
+      apt:
+        name:
+          - curl
+          - ca-certificates
+          - nodejs
+          - npm
+        state: present
+        update_cache: yes
+
+    - name: Create application user
+      user:
+        name: "{{ app_user }}"
+        shell: /bin/bash
+        create_home: yes
+
+    - name: Create application directory
+      file:
+        path: "{{ app_dir }}"
+        state: directory
+        owner: "{{ app_user }}"
+        group: "{{ app_user }}"
+        mode: "0755"
+
+    - name: Drop example .env file
+      copy:
+        dest: "{{ app_dir }}/.env"
+        content: |
+          NODE_ENV=production
+          PORT=3000
+YML     
