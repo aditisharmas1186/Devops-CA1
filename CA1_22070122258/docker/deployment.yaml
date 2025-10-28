@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+name: bank-ml-deployment
+spec:
+replicas: 1
+selector:
+matchLabels:
+app: bank-ml
+template:
+metadata:
+labels:
+app: bank-ml
+spec:
+containers:
+- name: bank-ml
+image: <your-dockerhub-username>/bank-ml-app:latest
+ports:
+- containerPort: 5000
+env:
+- name: MODEL_PATH
+value: "/app/src/model.joblib"
