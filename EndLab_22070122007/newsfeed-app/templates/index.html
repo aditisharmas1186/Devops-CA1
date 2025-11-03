@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>NewsFeed App</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f4f9; padding: 20px; }
+        .card {
+            background: white;
+            margin: 10px auto;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            width: 60%;
+        }
+        h2 { color: #333; }
+        .author { color: gray; font-size: 14px; }
+    </style>
+</head>
+<body>
+    <h1>📰 Latest News</h1>
+    {% for item in news_items %}
+        <div class="card">
+            <h2>{{ item.title }}</h2>
+            <p class="author">by {{ item.author }}</p>
+        </div>
+    {% endfor %}
+</body>
+</html>
